@@ -1,0 +1,57 @@
+html { height: 100%;
+       width:  100%; }
+
+body { height: 098%;
+       margin: 5px;
+       padding: 0px;
+       position: relative;
+       border-style: solid;
+       border-width: 2px; }
+
+#map-canvas     { height: 100%;
+                  position: fixed;
+                  z-index: 1; }
+
+#pi_info        { height: 45px;
+                  width: 80px;
+                  border-style: ridge;
+                  border-color: #000;
+                  border-width: 3px;
+                  background-color: #CFD1A1;
+                  font-family: Courier;
+                  position: absolute;
+                  top: 40px;
+                  right: 15px;
+                  z-index: 2;}
+
+#spectrum-div   { height: 65px;
+                  width: 220px;
+                  border-style: ridge;
+                  border-color: #000;
+                  border-width: 3px;
+                  background-color: #FFF;
+                  position: absolute;
+                  /*margin-left: auto;
+                  margin-right; auto;*/
+                  top: 125px;
+                  right: 15px;
+                  z-index: 2; }
+
+#spectrum-plot  { height: 80%;
+                  width:  80%;
+                  border-style: solid;
+                  border-width: 1px;
+                  position: absolute;
+                  left:   10%;
+                  bottom: 4%;
+                  z-index: 3;
+                  background-color: #000; }
+
+#b_closeSpectrum  { float: right;
+                    margin-top: 20px;
+                    margin-right: 20px;
+                    height: 40px;
+                    width: 60px;
+                    border-radius: 8px;
+                    color: #FFF;
+                    background-color: #900;}

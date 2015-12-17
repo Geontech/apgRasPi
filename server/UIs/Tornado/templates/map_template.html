@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REDHAWK RasPi Interface</title>
+
+<link rel="stylesheet" type="text/css" href="static/maps.css" />
+<link rel="icon" type="image/png" href="static/images/pi.png" />
+
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEeGfSJsVH1ihWvJ_3f9Yz30FgPyJCOyA&sensor=false">
+</script>
+<script src="static/scripts/jquery-2.0.3.min.js"></script>
+<script src="static/scripts/RGraph/libraries/RGraph.common.core.js"></script>
+<script src="static/scripts/RGraph/libraries/RGraph.line.js"></script>
+
+<script type='text/javascript'>
+var ipaddr = "{{ ipaddr }}";
+var port = {{ port }};
+var laptop_lat = {{ lat }};
+var laptop_lon = {{ lon }};
+</script>
+</head>
+
+<body>
+<div id="pi_info">
+<center>Nodes:<br/>{{ num_pis }}</center>
+</div>
+<div id="spectrum-div" style="display:none;"/>
+<!--<div id="spectrum-div">-->
+YAY PI POSITION!
+<!--Latitude:  {{ lat }}
+Longitude: {{ lon }}-->
+<!--<div id="spectrum-plot"/>-->
+<!--<button id="b_closeSpectrum" onclick="closeSpectrum()">OFF</button>-->
+</div>
+<div id="map-canvas"/>
+
+<script src="static/scripts/maps.js"></script>
+</body>
+</html>

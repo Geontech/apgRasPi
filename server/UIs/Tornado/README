@@ -1,0 +1,7 @@
+If running Centos 6.4:
+    sudo yum install -y python-tornado python-argparse
+
+Make sure there are holes in your firewall for whatever port you'll be using
+
+http://jimbergman.net/websocket-web-browser-test/
+

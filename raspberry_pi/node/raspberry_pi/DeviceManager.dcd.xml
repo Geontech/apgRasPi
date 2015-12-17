@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE deviceconfiguration PUBLIC "-//JTRS//DTD SCA V2.2.2 DCD//EN" "deviceconfiguration.dtd">
+<deviceconfiguration id="DCE:55e3e0cc-f510-4172-8ef7-9a1e083e465a" name="raspberry_pi">
+  <description>Raspberry pi w/ dongles</description>
+  <devicemanagersoftpkg>
+    <localfile name="/mgr/DeviceManager.spd.xml"/>
+  </devicemanagersoftpkg>
+  <componentfiles>
+    <componentfile id="GPP_7fa2d468-b2a2-4705-94ae-51d4b1f55bff" type="SPD">
+      <localfile name="/devices/GPP/GPP.spd.xml"/>
+    </componentfile>
+    <componentfile id="rtl_sdr_device_00c942bb-445f-42bc-9a29-7cb5cf4ed592" type="SPD">
+      <localfile name="/devices/rtl_sdr_device/rtl_sdr_device.spd.xml"/>
+    </componentfile>
+    <componentfile id="gps_receiver_eb697c1b-9749-40ae-b704-2868cf41ecca" type="SPD">
+      <localfile name="/devices/gps_receiver/gps_receiver.spd.xml"/>
+    </componentfile>
+    <componentfile id="antenna_control_6dbd921a-30aa-4848-95bd-e07612fbda4e" type="SPD">
+      <localfile name="/devices/antenna_control/antenna_control.spd.xml"/>
+    </componentfile>
+    <componentfile id="transmit_control_cc9b48be-2210-498d-8da6-a68aa7649d9e" type="SPD">
+      <localfile name="/devices/transmit_control/transmit_control.spd.xml"/>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <componentplacement>
+      <componentfileref refid="GPP_7fa2d468-b2a2-4705-94ae-51d4b1f55bff"/>
+      <componentinstantiation id="raspberry_pi:GPP_ID">
+        <usagename>GPP_1</usagename>
+        <componentproperties>
+          <simpleref refid="DCE:0f3a9a37-a342-43d8-9b7f-78dc6da74192" value="3.6.11-538"/>
+          <simpleref refid="DCE:2df4cfe4-675c-41ec-9cc8-84dff2f468b3" value="1"/>
+          <simpleref refid="DCE:fefb9c66-d14a-438d-ad59-2cfd1adb272b" value="armv6l"/>
+        </componentproperties>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="rtl_sdr_device_00c942bb-445f-42bc-9a29-7cb5cf4ed592"/>
+      <componentinstantiation id="raspberry_pi:RTL_ID">
+        <usagename>rtl_sdr_device_1</usagename>
+        <componentproperties>
+          <simpleref refid="center_frequency" value="97500000"/>
+          <simpleref refid="buffer_size" value="16384"/>
+          <simpleref refid="stream_id" value="rtl_sdr_id"/>
+          <simpleref refid="gain_mode" value="0"/>
+          <simpleref refid="buffer_num" value="20"/>
+        </componentproperties>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="gps_receiver_eb697c1b-9749-40ae-b704-2868cf41ecca"/>
+      <componentinstantiation id="raspberry_pi:GPS_ID">
+        <usagename>gps_receiver_1</usagename>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="antenna_control_6dbd921a-30aa-4848-95bd-e07612fbda4e"/>
+      <componentinstantiation id="raspberry_pi:ANTCTRL_ID">
+        <usagename>antenna_control_1</usagename>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="transmit_control_cc9b48be-2210-498d-8da6-a68aa7649d9e"/>
+      <componentinstantiation id="raspberry_pi:TXCTRL_ID">
+        <usagename>transmit_control_1</usagename>
+      </componentinstantiation>
+    </componentplacement>
+  </partitioning>
+  <connections>
+    <connectinterface id="connection_1">
+      <usesport>
+        <usesidentifier>message_out</usesidentifier>
+        <componentinstantiationref refid="raspberry_pi:ANTCTRL_ID"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>message_in</providesidentifier>
+        <componentinstantiationref refid="raspberry_pi:RTL_ID"/>
+      </providesport>
+    </connectinterface>
+  </connections>
+  <domainmanager>
+    <namingservice name="REDHAWK_DEV/REDHAWK_DEV"/>
+  </domainmanager>
+</deviceconfiguration>
