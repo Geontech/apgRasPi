@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE deviceconfiguration PUBLIC "-//JTRS//DTD SCA V2.2.2 DCD//EN" "deviceconfiguration.dtd">
+<deviceconfiguration id="DCE:b006e8e0-330e-48bd-8d15-efb8debf8830" name="gps_node">
+  <devicemanagersoftpkg>
+    <localfile name="/mgr/DeviceManager.spd.xml"/>
+  </devicemanagersoftpkg>
+  <componentfiles>
+    <componentfile id="gps_receiver_4a1c2470-0466-4aab-b7f0-da7281579bc5" type="SPD">
+      <localfile name="/devices/gps_receiver/gps_receiver.spd.xml"/>
+    </componentfile>
+    <componentfile id="GPP_e4533d76-a450-4d35-bc1c-3dafeaff6e86" type="SPD">
+      <localfile name="/devices/GPP/GPP.spd.xml"/>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <componentplacement>
+      <componentfileref refid="gps_receiver_4a1c2470-0466-4aab-b7f0-da7281579bc5"/>
+      <componentinstantiation id="DCE:92815260-55e8-4af4-9d28-d68ca1b45b2c">
+        <usagename>gps_receiver_1</usagename>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="GPP_e4533d76-a450-4d35-bc1c-3dafeaff6e86"/>
+      <componentinstantiation id="DCE:96875c45-ee0b-4b1f-8fde-893b3167281e">
+        <usagename>GPP_1</usagename>
+        <componentproperties>
+          <simpleref refid="DCE:0f3a9a37-a342-43d8-9b7f-78dc6da74192" value="3.6.11-538"/>
+          <simpleref refid="DCE:2df4cfe4-675c-41ec-9cc8-84dff2f468b3" value="1"/>
+          <simpleref refid="DCE:fefb9c66-d14a-438d-ad59-2cfd1adb272b" value="armv6l"/>
+        </componentproperties>
+      </componentinstantiation>
+    </componentplacement>
+  </partitioning>
+  <domainmanager>
+    <namingservice name="REDHAWK_DEV/REDHAWK_DEV"/>
+  </domainmanager>
+</deviceconfiguration>

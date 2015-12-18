@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE softwareassembly PUBLIC "-//JTRS//DTD SCA V2.2.2 SAD//EN" "softwareassembly.dtd">
+<softwareassembly id="DCE:f34ee2ca-51e6-4fca-b8d2-e6b78dc5c57a" name="waveform_example">
+  <description>An example waveform for the APG Tech Challenge Raspberry Pi + USB RTL node.</description>
+  <componentfiles>
+    <componentfile id="DataConverter_89900cbd-b0ae-424e-85c6-655a95376967" type="SPD">
+      <localfile name="/components/DataConverter/DataConverter.spd.xml"/>
+    </componentfile>
+    <componentfile id="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea" type="SPD">
+      <localfile name="/components/TuneFilterDecimate/TuneFilterDecimate.spd.xml"/>
+    </componentfile>
+    <componentfile id="AmFmPmBasebandDemod_d538a4ce-70b1-4c23-a4d6-b28008bfa5aa" type="SPD">
+      <localfile name="/components/AmFmPmBasebandDemod/AmFmPmBasebandDemod.spd.xml"/>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <componentplacement>
+      <componentfileref refid="DataConverter_89900cbd-b0ae-424e-85c6-655a95376967"/>
+      <componentinstantiation id="DataConverter_1">
+        <usagename>DataConverter_1</usagename>
+        <findcomponent>
+          <namingservice name="DataConverter_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea"/>
+      <componentinstantiation id="TuneFilterDecimate_1" startorder="1">
+        <usagename>TuneFilterDecimate_1</usagename>
+        <componentproperties>
+          <simpleref refid="FilterBW" value="15000.0"/>
+          <simpleref refid="DesiredOutputRate" value="150000.0"/>
+        </componentproperties>
+        <findcomponent>
+          <namingservice name="TuneFilterDecimate_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="AmFmPmBasebandDemod_d538a4ce-70b1-4c23-a4d6-b28008bfa5aa"/>
+      <componentinstantiation id="AmFmPmBasebandDemod_1" startorder="2">
+        <usagename>AmFmPmBasebandDemod_1</usagename>
+        <findcomponent>
+          <namingservice name="AmFmPmBasebandDemod_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea"/>
+      <componentinstantiation id="TuneFilterDecimate_2" startorder="3">
+        <usagename>TuneFilterDecimate_2</usagename>
+        <componentproperties>
+          <simpleref refid="FilterBW" value="15000.0"/>
+          <simpleref refid="DesiredOutputRate" value="32000.0"/>
+        </componentproperties>
+        <findcomponent>
+          <namingservice name="TuneFilterDecimate_2"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+  </partitioning>
+  <assemblycontroller>
+    <componentinstantiationref refid="DataConverter_1"/>
+  </assemblycontroller>
+  <connections>
+    <connectinterface id="connection_1">
+      <usesport>
+        <usesidentifier>dataFloat_Out</usesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="AmFmPmBasebandDemod_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="connection_2">
+      <usesport>
+        <usesidentifier>dataFloat_out</usesidentifier>
+        <componentinstantiationref refid="DataConverter_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="rtl_connection_1">
+      <usesport>
+        <usesidentifier>dataShort_Out</usesidentifier>
+        <deviceusedbyapplication usesrefid="rtl_connection"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataShort</providesidentifier>
+        <componentinstantiationref refid="DataConverter_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="connection_3">
+      <usesport>
+        <usesidentifier>fm_dataFloat_out</usesidentifier>
+        <componentinstantiationref refid="AmFmPmBasebandDemod_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_2"/>
+      </providesport>
+    </connectinterface>
+  </connections>
+  <usesdevicedependencies>
+    <usesdevice id="rtl_connection">
+		<!-- High-level notes:
+		     1) These translate to allocation calls on the Device to set it up.
+		     2) The allocation_id must match the connectinterface id for this connection (above)
+		     3) The tuner_type must be RX_DIGITIZER (only type supported with rtl_sdr_device)
+		     4) The group_id must match the group_id_global assigned in the Node's declaration.
+		     5) The RTL driver has no bandwidth property; it's really related to the sample rate.
+		        It's populated here only to satisfy frequency validation.
+		     6) The rf_flow_id must match the value in FRONTEND::tuner_status at the time of allocation.  -->
+		<!-- Use FRONTEND::tuner_allocation::?? to initially configure the device matched.  At least one 
+		     component must allocate device_control before listeners can allocate against it. -->
+		<!-- Use FRONTEND::listener_allocation::?? to establish a pure listener relationship. -->
+		<structref refid="FRONTEND::tuner_allocation">
+		  <simpleref refid="FRONTEND::tuner_allocation::tuner_type" value="RX_DIGITIZER"/> 
+		  <simpleref refid="FRONTEND::tuner_allocation::allocation_id" value="rtl_connection_1"/>
+          <simpleref refid="FRONTEND::tuner_allocation::device_control" value="true"/> 
+          <simpleref refid="FRONTEND::tuner_allocation::gain" value="0"/> 
+          <simpleref refid="rtl_device::allocation::agc_mode" value="true"/>
+          <simpleref refid="FRONTEND::tuner_allocation::frequency_correction" value="47"/> 
+		  <simpleref refid="FRONTEND::tuner_allocation::center_frequency" value="97500000"/>
+		  <simpleref refid="FRONTEND::tuner_allocation::sample_rate" value="256000"/>
+		  <simpleref refid="FRONTEND::tuner_allocation::bandwidth" value="125000"/>
+		  <simpleref refid="FRONTEND::tuner_allocation::group_id" value="rtls"/>
+		  <simpleref refid="FRONTEND::tuner_allocation::rf_flow_id" value=""/>
+		</structref>
+    </usesdevice>
+  </usesdevicedependencies>
+</softwareassembly>
