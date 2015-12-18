@@ -1,0 +1,16 @@
+[submodule "raspberry_pi/devices/transmit_control"]
+	path = raspberry_pi/devices/transmit_control
+	url = https://github.com/Geontech/transmit_control.git
+[submodule "raspberry_pi/devices/antenna_control"]
+	path = raspberry_pi/devices/antenna_control
+	url = https://github.com/Geontech/antenna_control.git
+[submodule "testing/lob_testing"]
+	path = testing/lob_testing
+	url = https://github.com/Geontech/lob_testing.git
+[submodule "raspberry_pi/devices/rtl_sdr_device"]
+	path = raspberry_pi/devices/rtl_sdr_device
+	url = https://github.com/Geontech/rtl_sdr_device.git
+[submodule "raspberry_pi/devices/gps_receiver"]
+	path = raspberry_pi/devices/gps_receiver
+	url = https://github.com/Geontech/GPS_Receiver.git
+	branch = apgRasPi
