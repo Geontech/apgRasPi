@@ -14,3 +14,6 @@
 	path = raspberry_pi/devices/gps_receiver
 	url = https://github.com/Geontech/GPS_Receiver.git
 	branch = apgRasPi
+[submodule "raspberry_pi/libraries/wiringPi"]
+	path = raspberry_pi/libraries/wiringPi
+	url = git://git.drogon.net/wiringPi
