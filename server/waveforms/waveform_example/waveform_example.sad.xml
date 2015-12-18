@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE softwareassembly PUBLIC "-//JTRS//DTD SCA V2.2.2 SAD//EN" "softwareassembly.dtd">
+<softwareassembly id="DCE:f34ee2ca-51e6-4fca-b8d2-e6b78dc5c57a" name="waveform_example">
+  <componentfiles>
+    <componentfile id="DataConverter_89900cbd-b0ae-424e-85c6-655a95376967" type="SPD">
+      <localfile name="/components/DataConverter/DataConverter.spd.xml"/>
+    </componentfile>
+    <componentfile id="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea" type="SPD">
+      <localfile name="/components/TuneFilterDecimate/TuneFilterDecimate.spd.xml"/>
+    </componentfile>
+    <componentfile id="AmFmPmBasebandDemod_d538a4ce-70b1-4c23-a4d6-b28008bfa5aa" type="SPD">
+      <localfile name="/components/AmFmPmBasebandDemod/AmFmPmBasebandDemod.spd.xml"/>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <componentplacement>
+      <componentfileref refid="DataConverter_89900cbd-b0ae-424e-85c6-655a95376967"/>
+      <componentinstantiation id="DataConverter_1">
+        <usagename>DataConverter_1</usagename>
+        <findcomponent>
+          <namingservice name="DataConverter_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea"/>
+      <componentinstantiation id="TuneFilterDecimate_1" startorder="1">
+        <usagename>TuneFilterDecimate_1</usagename>
+        <componentproperties>
+          <simpleref refid="FilterBW" value="15000.0"/>
+          <simpleref refid="DesiredOutputRate" value="150000.0"/>
+        </componentproperties>
+        <findcomponent>
+          <namingservice name="TuneFilterDecimate_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="AmFmPmBasebandDemod_d538a4ce-70b1-4c23-a4d6-b28008bfa5aa"/>
+      <componentinstantiation id="AmFmPmBasebandDemod_1" startorder="2">
+        <usagename>AmFmPmBasebandDemod_1</usagename>
+        <findcomponent>
+          <namingservice name="AmFmPmBasebandDemod_1"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+    <componentplacement>
+      <componentfileref refid="TuneFilterDecimate_d3c26a53-de61-4d37-9899-8082f273e2ea"/>
+      <componentinstantiation id="TuneFilterDecimate_2" startorder="3">
+        <usagename>TuneFilterDecimate_2</usagename>
+        <componentproperties>
+          <simpleref refid="FilterBW" value="15000.0"/>
+          <simpleref refid="DesiredOutputRate" value="150000.0"/>
+        </componentproperties>
+        <findcomponent>
+          <namingservice name="TuneFilterDecimate_2"/>
+        </findcomponent>
+      </componentinstantiation>
+    </componentplacement>
+  </partitioning>
+  <assemblycontroller>
+    <componentinstantiationref refid="DataConverter_1"/>
+  </assemblycontroller>
+  <connections>
+    <connectinterface id="connection_1">
+      <usesport>
+        <usesidentifier>dataFloat_Out</usesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="AmFmPmBasebandDemod_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="connection_2">
+      <usesport>
+        <usesidentifier>dataFloat_out</usesidentifier>
+        <componentinstantiationref refid="DataConverter_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="rtl_connection_1">
+      <usesport>
+        <usesidentifier>dataShort_Out</usesidentifier>
+        <deviceusedbyapplication usesrefid="rtl_connection"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataShort</providesidentifier>
+        <componentinstantiationref refid="DataConverter_1"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="connection_3">
+      <usesport>
+        <usesidentifier>fm_dataFloat_out</usesidentifier>
+        <componentinstantiationref refid="AmFmPmBasebandDemod_1"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>dataFloat_In</providesidentifier>
+        <componentinstantiationref refid="TuneFilterDecimate_2"/>
+      </providesport>
+    </connectinterface>
+  </connections>
+  <usesdevicedependencies>
+    <usesdevice id="rtl_connection">
+      <!-- refid is the default for device_model on devices -->
+      <propertyref refid="DCE:0f99b2e4-9903-4631-9846-ff349d18ecfb" value="RTL2832"/>
+      <propertyref refid="reserve" value="true"/>
+    </usesdevice>
+  </usesdevicedependencies>
+</softwareassembly>
