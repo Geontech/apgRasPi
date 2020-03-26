@@ -2,7 +2,9 @@
 
 **Development Ceased:** Winter 2013
 **Final Report Date:** 7 March 2014
-**Date of this Document:** 21 March 2016
+**Date of this Document:** 26 March 2020
+
+ > **This project is no longer active.  [Here is an alternative.](https://www.google.com/url?q=https://github.com/gnuradio/hugo-website/blob/master/content/grcon/grcon17/presentations/real-time_direction_finding/Todd-Moon-Gnuradio-DOA.pdf&sa=D&source=hangouts&ust=1585312969719000&usg=AFQjCNFC-6xAfzu5naex5iJS4o7KhHH_YQ)**
 
 **Directories:**
 
@@ -87,4 +89,4 @@ Unless something has gone wrong you should be demodulating FM transmissions at t
 
 ## Getting Support
 
-Please keep in mind however that this project is no longer active.  There is no support expressed or implied in our having published these works.  However, as time is permits, we can attempt to address support questions through redhawk@geontech.com; responses may come from alternate addresses of other engineers.
+Please keep in mind however that this project is no longer active.  There is no support expressed or implied in our having published these works.  However, as time is permits, we can attempt to address support questions through redhawk@geontech.com; responses may come from alternate addresses of other engineers.  If you would rather start with a maintained solution, see [this link](https://www.google.com/url?q=https://github.com/gnuradio/hugo-website/blob/master/content/grcon/grcon17/presentations/real-time_direction_finding/Todd-Moon-Gnuradio-DOA.pdf&sa=D&source=hangouts&ust=1585312969719000&usg=AFQjCNFC-6xAfzu5naex5iJS4o7KhHH_YQ).
